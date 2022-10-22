@@ -12,12 +12,13 @@ let params = new URL(document.location).searchParams;
 const whitelisted = [
   'http://localhost:3026',
   'https://nftanvil.com',
+  'https://t5p5l-siaaa-aaaam-aav7q-cai.ic0.app',
+  'https://t5p5l-siaaa-aaaam-aav7q-cai.raw.ic0.app',
   'http://localhost:3000',
 ];
 
 let opener_origin = new URL(document.referrer).origin;
-
-if (process.NODE_ENV === 'development') opener_origin = 'http://localhost:3000'; // during development
+// let opener_origin = 'http://localhost:3000'; // during development
 
 let deny = true;
 if (opener_origin)
