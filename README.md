@@ -21,7 +21,7 @@ let identity = athena.authenticate({
   restore = false // restore session automatically without prompting user (if user is already logged)
 });
 
-// Use 'identity' in AgentJS
+// Use 'identity' with AgentJS
 ```
 
 
