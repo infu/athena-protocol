@@ -2,7 +2,8 @@
 
 # Athena Protocol
 *MVP Basic version*
-The most minimalistic web3 identity you can own and deploy for your DAO
+The most minimalistic web3 identity you can own and deploy for your DAO.
+Made for the Internet Computer
 
 
 
