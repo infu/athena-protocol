@@ -15,11 +15,13 @@ npm i athena-protocol @dfinity/identity
 ```js
 import athena from "athena-protocol"
 
-athena.authenticate({
+let identity = athena.authenticate({
   host: "http://yourhosthere",
   mode: "dark", // or "light"
   restore = false // restore session automatically without prompting user (if user is already logged)
 });
+
+// Use 'identity' in AgentJS
 ```
 
 
