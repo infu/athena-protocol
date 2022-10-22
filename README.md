@@ -20,7 +20,7 @@ import athena from "athena-protocol"
 let identity = athena.authenticate({
   host: "http://yourhosthere",
   mode: "dark", // or "light"
-  restore = false // restore session automatically without prompting user (if user is already logged)
+  restore : false // restore session automatically without prompting user (if user is already logged)
 });
 
 // Use 'identity' with AgentJS
