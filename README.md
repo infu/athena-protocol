@@ -2,7 +2,7 @@
 
 # Athena Protocol
 *MVP Basic version*
-The most minimalistic web3 identity you can own and deploy for your DAO.
+The most minimalistic web3 identity provider for sharing one identity between trusted sites.
 Made for the Internet Computer.
 
 
@@ -27,7 +27,7 @@ let identity = athena.authenticate({
 ```
 
 
-## Install Host
+## Install Provider
 
 1) Edt src/index.js and whitelist your own domains
 2) Change src/logo.svg
