@@ -1,4 +1,4 @@
-<img src="./src/athene.svg" width="300">
+<img src="./src/athene.svg" width="200">
 
 # Athena Protocol
 *MVP Basic version*
