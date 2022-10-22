@@ -11,7 +11,7 @@ Made for the Internet Computer.
 ## Install Client
 
 ```bash
-npm i athena-protocol @dfinity/identity
+npm i athena-protocol @dfinity/identity @dfinity/agent @dfinity/candid @dfinity/principal
 ```
 
 ```js
@@ -20,7 +20,7 @@ import athena from "athena-protocol"
 let identity = athena.authenticate({
   host: "http://yourhosthere",
   mode: "dark", // or "light"
-  restore = false // restore session automatically without prompting user (if user is already logged)
+  restore : false // restore session automatically without prompting user (if user is already logged)
 });
 
 // Use 'identity' with AgentJS
@@ -36,3 +36,8 @@ let identity = athena.authenticate({
 5) Once the Internet Computer supports custom domains you can host it on the IC. If you don't want a custom domain, just deploy it with DFX right away
 
 
+## Screenshots
+<img width="485" alt="image" src="https://user-images.githubusercontent.com/24810/197362924-4e6b25fd-c459-4511-ae70-77074780a6cb.png">
+
+## License
+License Apache 2.0
