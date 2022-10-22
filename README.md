@@ -11,7 +11,7 @@ Made for the Internet Computer.
 ## Install Client
 
 ```bash
-npm i athena-protocol @dfinity/identity @dfinity/agent
+npm i athena-protocol @dfinity/identity @dfinity/agent @dfinity/candid @dfinity/principal
 ```
 
 ```js
