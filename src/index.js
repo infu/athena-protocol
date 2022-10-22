@@ -1,4 +1,3 @@
-import { ColorModeScript } from '@chakra-ui/react';
 import React, { StrictMode } from 'react';
 import * as ReactDOM from 'react-dom/client';
 import { Auth } from './Auth';
@@ -18,7 +17,7 @@ const whitelisted = [
 
 let opener_origin = new URL(document.referrer).origin;
 
-if (process.NODE_ENV === "development") opener_origin = 'http://localhost:3000'; // during development
+if (process.NODE_ENV === 'development') opener_origin = 'http://localhost:3000'; // during development
 
 let deny = true;
 if (opener_origin)
