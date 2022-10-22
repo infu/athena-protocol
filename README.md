@@ -38,3 +38,6 @@ let identity = athena.authenticate({
 
 ## Screenshots
 <img width="485" alt="image" src="https://user-images.githubusercontent.com/24810/197362924-4e6b25fd-c459-4511-ae70-77074780a6cb.png">
+
+## License
+License Apache 2.0
