@@ -18,6 +18,7 @@ import {
   HStack,
   Flex,
   Stack,
+  Spacer,
 } from '@chakra-ui/react';
 import { Formik, Form, Field } from 'formik';
 import { getIdentityFromPass } from './identity';
@@ -36,6 +37,7 @@ import athene from './athene.svg';
 import getRandomValues from 'get-random-values';
 import './auth.css';
 import basex from 'base-x';
+import { ArrowForwardIcon, ChevronRightIcon } from '@chakra-ui/icons';
 
 var BASE58 = '123456789ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz';
 let b58 = basex(BASE58);
@@ -66,18 +68,19 @@ function LostPass({ setRegister }) {
 
   return (
     <>
-      <Button
-        size="xs"
-        colorScheme={'blue'}
-        variant="link"
-        onClick={e => {
-          e.preventDefault();
-          onOpen();
-        }}
-      >
-        Lost access?
-      </Button>
-
+      <Box textAlign="left">
+        <Button
+          size="xs"
+          colorScheme={'blue'}
+          variant="link"
+          onClick={e => {
+            e.preventDefault();
+            onOpen();
+          }}
+        >
+          Lost access?
+        </Button>
+      </Box>
       <Modal
         initialFocusRef={initialRef}
         isOpen={isOpen}
@@ -224,7 +227,7 @@ export const AuthInner = ({ onClose, setRegister, setKey, register }) => {
         <Form autoComplete={register ? 'off' : ''}>
           <Box p={5} maxW={'400px'} ml="auto" mr="auto">
             <Heading size="md">
-              {register ? 'Create new account' : 'Log In'}
+              {register ? 'Create new account' : 'Login'}
             </Heading>
 
             <Box mt={3}>
@@ -236,12 +239,13 @@ export const AuthInner = ({ onClose, setRegister, setKey, register }) => {
                         isInvalid={form.errors.id && form.touched.id}
                       >
                         <Input
-                          h="80px"
-                          fontSize="34px"
+                          // h="80px"
+                          // fontSize="34px"
                           pl="30px"
                           borderRadius="8px 0px 0px 8px"
                           {...field}
                           placeholder="username"
+                          autoFocus={'yes'}
                           autoComplete={register ? 'off' : 'username'}
                         />
                         <FormErrorMessage>{form.errors.id}</FormErrorMessage>
@@ -259,8 +263,8 @@ export const AuthInner = ({ onClose, setRegister, setKey, register }) => {
                         <Input
                           {...field}
                           w="20px"
-                          h="80px"
-                          fontSize="34px"
+                          // h="80px"
+                          // fontSize="34px"
                           borderRadius="0px 8px 8px 0px"
                           type={register ? 'password' : 'password'}
                           placeholder="password"
@@ -305,7 +309,7 @@ export const AuthInner = ({ onClose, setRegister, setKey, register }) => {
 
             <Box mt={3}>
               {register ? (
-                <>
+                <Flex>
                   {!register.recover ? (
                     <Button
                       colorScheme="gray"
@@ -318,17 +322,18 @@ export const AuthInner = ({ onClose, setRegister, setKey, register }) => {
                       Already registered?
                     </Button>
                   ) : null}
-
+                  <Spacer />
                   <Button
                     colorScheme="blue"
                     isLoading={props.isSubmitting}
                     type="submit"
+                    rightIcon={<ChevronRightIcon />}
                   >
-                    {register.recover ? 'Recover' : 'Register'}
+                    {register.recover ? 'Recover' : 'Create'}
                   </Button>
-                </>
+                </Flex>
               ) : (
-                <>
+                <Flex>
                   <Button
                     mr="4"
                     colorScheme="green"
@@ -339,14 +344,16 @@ export const AuthInner = ({ onClose, setRegister, setKey, register }) => {
                   >
                     Create new account
                   </Button>
+                  <Spacer />
                   <Button
                     colorScheme="blue"
                     isLoading={props.isSubmitting}
                     type="submit"
+                    rightIcon={<ArrowForwardIcon />}
                   >
-                    Log In
+                    Log in
                   </Button>
-                </>
+                </Flex>
               )}
             </Box>
           </Box>

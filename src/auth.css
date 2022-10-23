@@ -11,7 +11,7 @@ select:-webkit-autofill:focus {
   -webkit-text-fill-color: rgb(26, 36, 54);
   -webkit-box-shadow: 0 0 0px 1000px rgb(199, 229, 249) inset;
   transition: background-color 5000s ease-in-out 0s;
-  font-size:34px!important
+  /* font-size:34px!important */
 }
 
 @-webkit-keyframes autofill {
@@ -31,6 +31,6 @@ input:-webkit-autofill {
 -webkit-autofill:hover,
 -webkit-autofill:focus,
 -webkit-autofill:active {
-  font-family: Times, "Times New Roman", serif !important;
-  font-size:34px;
+  /* font-family: Times, "Times New Roman", serif !important;
+  font-size:34px; */
 }
