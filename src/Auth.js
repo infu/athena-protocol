@@ -16,6 +16,8 @@ import {
   Image,
   useColorMode,
   HStack,
+  Flex,
+  Stack,
 } from '@chakra-ui/react';
 import { Formik, Form, Field } from 'formik';
 import { getIdentityFromPass } from './identity';
@@ -32,7 +34,7 @@ import logo from './logo.svg';
 import Passphrase from './mnemonic';
 import athene from './athene.svg';
 import getRandomValues from 'get-random-values';
-
+import './auth.css';
 import basex from 'base-x';
 
 var BASE58 = '123456789ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz';
@@ -73,7 +75,7 @@ function LostPass({ setRegister }) {
           onOpen();
         }}
       >
-        Lost password?
+        Lost access?
       </Button>
 
       <Modal
@@ -225,60 +227,80 @@ export const AuthInner = ({ onClose, setRegister, setKey, register }) => {
               {register ? 'Create new account' : 'Log In'}
             </Heading>
 
-            <Box>
-              <Field name="id" validate={validateName}>
-                {({ field, form }) => (
-                  <FormControl isInvalid={form.errors.id && form.touched.id}>
-                    <FormLabel mt={2}>Username</FormLabel>
-                    <Input
-                      {...field}
-                      placeholder="username"
-                      autoComplete={register ? 'off' : 'username'}
-                    />
-                    <FormErrorMessage>{form.errors.id}</FormErrorMessage>
-                  </FormControl>
-                )}
-              </Field>
-              <Field name="password" validate={validatePass}>
-                {({ field, form }) => (
-                  <FormControl
-                    isInvalid={form.errors.password && form.touched.password}
-                  >
-                    <FormLabel mt={2}>Password</FormLabel>
-                    <Input
-                      {...field}
-                      type={register ? 'password' : 'password'}
-                      placeholder="password"
-                      readOnly={register ? true : false}
-                      disabled={register ? true : false}
-                      autoComplete={
-                        register ? 'new-password' : 'current-password'
-                      }
-                    />
-                    <FormErrorMessage>{form.errors.password}</FormErrorMessage>
-                  </FormControl>
-                )}
-              </Field>
-              {!register ? <LostPass setRegister={setRegister} /> : null}
+            <Box mt={3}>
+              <Stack>
+                <Flex pr="10px">
+                  <Field name="id" validate={validateName}>
+                    {({ field, form }) => (
+                      <FormControl
+                        isInvalid={form.errors.id && form.touched.id}
+                      >
+                        <Input
+                          h="80px"
+                          fontSize="34px"
+                          pl="30px"
+                          borderRadius="8px 0px 0px 8px"
+                          {...field}
+                          placeholder="username"
+                          autoComplete={register ? 'off' : 'username'}
+                        />
+                        <FormErrorMessage>{form.errors.id}</FormErrorMessage>
+                      </FormControl>
+                    )}
+                  </Field>
+                  <Field name="password">
+                    {({ field, form }) => (
+                      <FormControl
+                        w="20px"
+                        isInvalid={
+                          form.errors.password && form.touched.password
+                        }
+                      >
+                        <Input
+                          {...field}
+                          w="20px"
+                          h="80px"
+                          fontSize="34px"
+                          borderRadius="0px 8px 8px 0px"
+                          type={register ? 'password' : 'password'}
+                          placeholder="password"
+                          readOnly={register ? true : false}
+                          disabled={register ? true : false}
+                          autoComplete={
+                            register ? 'new-password' : 'current-password'
+                          }
+                        />
+                        <FormErrorMessage>
+                          {form.errors.password}
+                        </FormErrorMessage>
+                      </FormControl>
+                    )}
+                  </Field>
+                </Flex>
+                {!register ? <LostPass setRegister={setRegister} /> : null}
 
-              {register ? (
-                <>
-                  <Box
-                    mt={-1}
-                    pl={4}
-                    pr={4}
-                    pb={4}
-                    pt={2}
-                    borderRadius={'4px'}
-                    borderRight={'1px'}
-                    borderLeft={'1px'}
-                    borderBottom={'1px'}
-                    borderColor={colorMode === 'dark' ? 'gray.700' : 'gray.200'}
-                  >
-                    {register.mnemonic}
-                  </Box>
-                </>
-              ) : null}
+                {register ? (
+                  <>
+                    <Text fontSize="16">Backup phrase</Text>
+                    <Box
+                      pl={4}
+                      pb={4}
+                      pt={2}
+                      pr={4}
+                      borderRadius={'4px'}
+                      borderRight={'1px'}
+                      borderLeft={'1px'}
+                      borderBottom={'1px'}
+                      borderTop={'1px'}
+                      borderColor={
+                        colorMode === 'dark' ? 'gray.700' : 'gray.200'
+                      }
+                    >
+                      {register.mnemonic}
+                    </Box>
+                  </>
+                ) : null}
+              </Stack>
             </Box>
 
             <Box mt={3}>
