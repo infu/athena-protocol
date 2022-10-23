@@ -117,7 +117,7 @@ export const Auth = ({ returnKeys }) => {
   return (
     <ChakraProvider theme={theme}>
       <Center>
-        <Image src={logo} w={'100px'} mt={'60px'} />
+        <Image src={logo} h={'120px'} mt={'60px'} />
       </Center>
       <AuthInner
         setKey={pass => {
