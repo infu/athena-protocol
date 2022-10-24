@@ -186,7 +186,7 @@ export const AuthInner = ({ onClose, setRegister, setKey, register }) => {
   function validateName(value) {
     let error;
     if (!value) {
-      error = 'Name is required';
+      error = 'User required';
     } else if (value.length < 4) {
       error = 'Has to be at least 4 characters';
     }
@@ -195,7 +195,7 @@ export const AuthInner = ({ onClose, setRegister, setKey, register }) => {
   function validatePass(value) {
     let error;
     if (!value || value.length < 15) {
-      error = 'Pass has to be 15 characters';
+      error = 'Not a valid account';
     }
     return error;
   }
@@ -244,6 +244,9 @@ export const AuthInner = ({ onClose, setRegister, setKey, register }) => {
                           pl="30px"
                           borderRadius="8px 0px 0px 8px"
                           {...field}
+                          onKeyDown={e => {
+                            if (!register) e.preventDefault();
+                          }}
                           placeholder="username"
                           autoFocus={'yes'}
                           autoComplete={register ? 'off' : 'username'}
@@ -252,7 +255,7 @@ export const AuthInner = ({ onClose, setRegister, setKey, register }) => {
                       </FormControl>
                     )}
                   </Field>
-                  <Field name="password">
+                  <Field name="password" validate={validatePass}>
                     {({ field, form }) => (
                       <FormControl
                         w="20px"
@@ -274,7 +277,13 @@ export const AuthInner = ({ onClose, setRegister, setKey, register }) => {
                             register ? 'new-password' : 'current-password'
                           }
                         />
-                        <FormErrorMessage>
+                        <FormErrorMessage
+                          sx={{
+                            position: 'relative',
+                            left: '-100px',
+                            width: '100px',
+                          }}
+                        >
                           {form.errors.password}
                         </FormErrorMessage>
                       </FormControl>
