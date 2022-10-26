@@ -18,7 +18,6 @@ const whitelisted = [
 ];
 
 let opener_origin = new URL(document.referrer).origin;
-// let opener_origin = 'http://localhost:3000'; // during development
 
 let deny = true;
 if (opener_origin)
@@ -36,16 +35,20 @@ if (deny) {
   }
 }
 
-const returnKeys = key => {
-  window.localStorage.setItem('keys', key);
-  window.opener.postMessage(key, opener_origin); // this will make sure opener can't cheat. It wont send to unlisted url
+const returnChain = async chain => {
+  window.localStorage.setItem('chain', chain);
+
+  window.opener.postMessage(
+    { type: 'provideChain', payload: chain },
+    opener_origin
+  ); // this will make sure opener can't cheat. It wont send to unlisted url
   window.close();
 };
 
 // restore will attempt to relog the user quickly so dapps don't have to use their localStorage
 if (params.get('restore')) {
-  let keys = window.localStorage.getItem('keys');
-  if (keys) returnKeys(keys);
+  let chain = window.localStorage.getItem('chain');
+  if (chain) returnChain(chain);
 }
 
 // Theme
@@ -55,7 +58,12 @@ window.localStorage.setItem('chakra-ui-color-mode', mode);
 if (!deny)
   root.render(
     <StrictMode>
-      <Auth mode={mode} returnKeys={returnKeys} />
+      <Auth
+        mode={mode}
+        returnChain={returnChain}
+        whitelisted={whitelisted}
+        opener_origin={opener_origin}
+      />
     </StrictMode>
   );
 

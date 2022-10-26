@@ -1,4 +1,15 @@
-import { Ed25519KeyIdentity } from '@dfinity/identity';
+import {
+  Ed25519KeyIdentity,
+  DelegationChain,
+  DelegationIdentity,
+} from '@dfinity/identity';
+import getRandomValues from 'get-random-values';
+
+const newIdentity = () => {
+  const entropy = getRandomValues(new Uint8Array(32));
+  const identity = Ed25519KeyIdentity.generate(entropy);
+  return identity;
+};
 
 const athene_url = 'http://localhost:3000';
 
@@ -6,21 +17,37 @@ const auth = {
   identity: false,
 };
 
+var prevListener = false;
+
 auth.authenticate = ({
   host = athene_url,
   mode = 'dark',
   restore = false,
 } = {}) => {
   return new Promise((resolve, reject) => {
+    const temp = newIdentity();
+
     const elistener = msg => {
       if (!msg.isTrusted) return;
       if (msg.origin !== host) return;
 
-      auth.identity = Ed25519KeyIdentity.fromParsedJson(JSON.parse(msg.data));
+      if (msg.data.type === 'getPublicKey') {
+        popup.postMessage(
+          { type: 'getPublicKeyReply', payload: temp.getPublicKey().toDer() },
+          athene_url
+        );
+      } else if (msg.data.type === 'provideChain') {
+        let chain = DelegationChain.fromJSON(msg.data.payload);
+        auth.identity = new DelegationIdentity(temp, chain);
 
-      document.removeEventListener('message', elistener);
-      resolve(auth.identity);
+        // Ed25519KeyIdentity.fromParsedJson(JSON.parse(msg.data));
+
+        document.removeEventListener('message', elistener);
+        resolve(auth.identity);
+      }
     };
+    if (prevListener) window.removeEventListener('message', prevListener);
+    prevListener = elistener;
 
     window.addEventListener('message', elistener, false);
 

@@ -21,7 +21,7 @@ import {
   Spacer,
 } from '@chakra-ui/react';
 import { Formik, Form, Field } from 'formik';
-import { getIdentityFromPass } from './identity';
+import { getIdentityFromPass, createChain } from './identity';
 import {
   Modal,
   ModalOverlay,
@@ -38,6 +38,8 @@ import getRandomValues from 'get-random-values';
 import './auth.css';
 import basex from 'base-x';
 import { ArrowForwardIcon, ChevronRightIcon } from '@chakra-ui/icons';
+
+import { waitForMessage } from './coms';
 
 var BASE58 = '123456789ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz';
 let b58 = basex(BASE58);
@@ -114,7 +116,7 @@ function LostPass({ setRegister }) {
   );
 }
 
-export const Auth = ({ returnKeys }) => {
+export const Auth = ({ returnChain, whitelisted, opener_origin }) => {
   const [register, setRegister] = useState(false);
 
   return (
@@ -123,14 +125,21 @@ export const Auth = ({ returnKeys }) => {
         <Image src={logo} h={'120px'} mt={'60px'} />
       </Center>
       <AuthInner
-        setKey={pass => {
-          let identity = getIdentityFromPass(pass);
-          let key = JSON.stringify(identity.toJSON());
+        setKey={async pass => {
+          let root = getIdentityFromPass(pass);
 
-          returnKeys(key);
+          window.opener.postMessage({ type: 'getPublicKey' }, opener_origin);
+
+          let publicKeyDer = await waitForMessage(
+            'getPublicKeyReply',
+            whitelisted
+          );
+
+          let chain = await createChain(root, publicKeyDer);
+
+          returnChain(chain.toJSON());
         }}
         key={register ? 'reg' : 'login'}
-        // onClose={onClose}
         setRegister={setRegister}
         register={register}
       />

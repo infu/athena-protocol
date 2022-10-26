@@ -1,4 +1,8 @@
-import { Ed25519KeyIdentity } from '@dfinity/identity';
+import {
+  Ed25519KeyIdentity,
+  DelegationChain,
+  Ed25519PublicKey,
+} from '@dfinity/identity';
 
 import { sha256 } from 'js-sha256';
 
@@ -11,4 +15,14 @@ export const getIdentityFromPass = pass => {
   let identity = Ed25519KeyIdentity.generate(entropy);
 
   return identity;
+};
+
+export const createChain = async (rootIdentity, publicKeyDer) => {
+  let chain = await DelegationChain.create(
+    rootIdentity,
+    Ed25519PublicKey.fromDer(publicKeyDer),
+    Date.now() + 30 * 1000 // 30 sec
+  );
+
+  return chain;
 };
