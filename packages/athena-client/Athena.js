@@ -34,7 +34,7 @@ auth.authenticate = ({
       if (msg.data.type === 'getPublicKey') {
         popup.postMessage(
           { type: 'getPublicKeyReply', payload: temp.getPublicKey().toDer() },
-          athene_url
+          host
         );
       } else if (msg.data.type === 'provideChain') {
         let chain = DelegationChain.fromJSON(msg.data.payload);
