@@ -10,11 +10,11 @@ let params = new URL(document.location).searchParams;
 
 // Whitelist origins
 const whitelisted = [
+  'http://localhost:3000',
   'http://localhost:3026',
   'https://nftanvil.com',
-  'https://t5p5l-siaaa-aaaam-aav7q-cai.ic0.app',
-  'https://t5p5l-siaaa-aaaam-aav7q-cai.raw.ic0.app',
-  'http://localhost:3000',
+  'https://ratoko.com',
+  'https://badbot.ninja',
 ];
 
 let opener_origin = new URL(document.referrer).origin;

@@ -21,7 +21,7 @@ export const createChain = async (rootIdentity, publicKeyDer) => {
   let chain = await DelegationChain.create(
     rootIdentity,
     Ed25519PublicKey.fromDer(publicKeyDer),
-    Date.now() + 30 * 1000 // 30 sec
+    Date.now() + 4 * 60 * 60 * 1000 // 4 hours
   );
 
   return chain;
